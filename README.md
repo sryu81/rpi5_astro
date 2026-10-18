@@ -113,6 +113,31 @@ Nmap done: 256 IP addresses (5 hosts up) scanned in 3.44 seconds
 In my network there are 2 systems running with port 22 (SSH) opened. One is my laptop
 the other is my Raspberry Pi system. Log on to the pi system now!
 
+### (Optional) Install the LAN beacon so you never need nmap again
+
+`beacon/` contains a tiny UDP broadcast beacon. Once installed, the Pi announces its
+hostname, IP addresses, uptime and power status (`vcgencmd get_throttled`) every 5 s on
+UDP port 50505. It starts at boot, so after a power loss in the field you can find the Pi
+again immediately.
+
+```
+# on the pi (copy the beacon/ directory over first)
+bash beacon/beacon_setup.sh
+
+# on your laptop, same network (python3 only, no extra packages)
+python3 beacon/find_pi.py
+```
+
+```
+Listening for beacons on UDP 50505 ...
+  astros2          from 10.0.0.184      [wlan0=10.0.0.184]  up 0h59m  throttled=0x50000  <-- power issue!
+      ssh 10.0.0.184
+```
+
+If nothing shows up, allow inbound UDP 50505 in the laptop firewall
+(`sudo ufw allow 50505/udp`). Pi OS also runs avahi, so `ssh <user>@<hostname>.local` may
+work as well on networks that pass mDNS.
+
 ### Setup X11 + openbox + VNC for display
 
 Run this script:
