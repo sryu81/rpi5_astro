@@ -227,10 +227,10 @@ echo ""
 info "Step 8 — Verifying setup..."
 
 # Check service status
-if systemctl is-active --quiet vncserver-virtual-session@{VNC_USER}.service; then
+if systemctl is-active --quiet vncserver-virtual-session@${VNC_USER}.service; then
     success "VNC service is running."
 else
-    error "VNC service failed to start. Check: journalctl -u vncserver-virtual-session@{VNC_USER}.service"
+    error "VNC service failed to start. Check: journalctl -u vncserver-virtual-session@${VNC_USER}.service"
 fi
 
 # Check port is listening
@@ -257,12 +257,12 @@ echo ""
 echo -e "  ${YELLOW}${PI_IP}:${VNC_PORT}${NC}"
 echo ""
 echo "  Service management:"
-echo "  sudo systemctl status  vncserver-virtual-session@{VNC_USER}.service"
-echo "  sudo systemctl restart vncserver-virtual-session@{VNC_USER}.service"
-echo "  sudo systemctl stop    vncserver-virtual-session@{VNC_USER}.service"
+echo "  sudo systemctl status  vncserver-virtual-session@${VNC_USER}.service"
+echo "  sudo systemctl restart vncserver-virtual-session@${VNC_USER}.service"
+echo "  sudo systemctl stop    vncserver-virtual-session@${VNC_USER}.service"
 echo ""
 echo "  View logs:"
-echo "  journalctl -u vncserver-virtual-session@{VNC_USER}.service -f"
+echo "  journalctl -u vncserver-virtual-session@${VNC_USER}.service -f"
 echo ""
 echo "  VNC session log:"
 echo "  cat ${VNC_HOME}/.vnc/${VNC_HOST}:${DISPLAY_NUM}.log"

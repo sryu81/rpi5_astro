@@ -113,6 +113,16 @@ Nmap done: 256 IP addresses (5 hosts up) scanned in 3.44 seconds
 In my network there are 2 systems running with port 22 (SSH) opened. One is my laptop
 the other is my Raspberry Pi system. Log on to the pi system now!
 
+### Get this repository on the Pi
+
+All the following steps run from the repository directory on the Pi:
+
+```
+sudo apt install -y git
+git clone https://github.com/sryu81/rpi5_astro.git
+cd rpi5_astro
+```
+
 ### (Optional) Install the LAN beacon so you never need nmap again
 
 `beacon/` contains a tiny UDP broadcast beacon. Once installed, the Pi announces its
@@ -121,10 +131,10 @@ UDP port 50505. It starts at boot, so after a power loss in the field you can fi
 again immediately.
 
 ```
-# on the pi (copy the beacon/ directory over first)
-bash beacon/beacon_setup.sh
+# on the pi, in the rpi5_astro directory
+./beacon/beacon_setup.sh
 
-# on your laptop, same network (python3 only, no extra packages)
+# on your laptop, same network (python3 only, no extra packages; clone this repo there too)
 python3 beacon/find_pi.py
 ```
 
@@ -175,8 +185,7 @@ packages needed.
 ### Install the custom build deb packages
 
 ```
-cd deb
-sudo apt install ./indi_20260421-1_arm64.deb ./indi-3rdparty-2.0.8_2.0.8-1_arm64.deb ./indi-3rdparty-driver_2.0.8-1_arm64.deb ./phd2_2.6.14-1_arm64.deb ./kstars_3.7.1-1_arm64.deb
+sudo apt install ./deb/kstars_3.7.1/indi_20260421-1_arm64.deb ./deb/kstars_3.7.1/indi-3rdparty-2.0.8_2.0.8-1_arm64.deb ./deb/kstars_3.7.1/indi-3rdparty-driver_2.0.8-1_arm64.deb ./deb/phd2_2.6.14/phd2_2.6.14-1_arm64.deb ./deb/kstars_3.7.1/kstars_3.7.1-1_arm64.deb
 ```
 
 Ignore the last message that looks like an error. Those are not errors actually.
@@ -208,8 +217,7 @@ This installs `libopencv-calib3d406` (required by kstars itself), `libcurl3-gnut
 ### Install the custom build deb packages
 
 ```
-cd deb
-sudo apt install ./indi-core-rpi5_2.2.1_arm64.deb ./indi-3rdparty-rpi5_2.2.1_arm64.deb ./phd2_2.6.14-1_arm64.deb ./kstars-custom_3.8.3_arm64.deb
+sudo apt install ./deb/kstars_3.8.3/indi-core-rpi5_2.2.1_arm64.deb ./deb/kstars_3.8.3/indi-3rdparty-rpi5_2.2.1_arm64.deb ./deb/phd2_2.6.14/phd2_2.6.14-1_arm64.deb ./deb/kstars_3.8.3/kstars-custom_3.8.3_arm64.deb
 ```
 
 The 3.8.3 packages ship the vendor camera SDKs bundled and use correct SONAMEs, so
